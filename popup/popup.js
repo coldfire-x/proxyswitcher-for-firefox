@@ -79,63 +79,78 @@ function createProxyItem(proxy) {
     ? 'No proxy'
     : `${proxy.type.toUpperCase()} ${proxy.host}:${proxy.port}`;
 
-  // Build action buttons for non-direct proxies
-  let actionButtons = '';
-  if (proxy.id !== 'direct') {
-    const toggleIcon = proxy.enabled === false ? '○' : '●';
-    const toggleTitle = proxy.enabled === false ? 'Enable proxy' : 'Disable proxy';
-    actionButtons = `
-      <button class="btn-toggle" data-id="${proxy.id}" title="${toggleTitle}">${toggleIcon}</button>
-      <button class="btn-edit" data-id="${proxy.id}" title="Edit proxy">✎</button>
-      <button class="btn-delete" data-id="${proxy.id}" title="Delete proxy">×</button>
-    `;
-  }
+  // Create proxy info section
+  const proxyInfo = document.createElement('div');
+  proxyInfo.className = 'proxy-info';
 
-  div.innerHTML = `
-    <div class="proxy-info">
-      <div class="proxy-name">${proxy.name}</div>
-      <div class="proxy-details">${details}</div>
-    </div>
-    <div class="proxy-actions">
-      ${actionButtons}
-      <span class="status-indicator"></span>
-    </div>
-  `;
+  const proxyName = document.createElement('div');
+  proxyName.className = 'proxy-name';
+  proxyName.textContent = proxy.name;
+
+  const proxyDetails = document.createElement('div');
+  proxyDetails.className = 'proxy-details';
+  proxyDetails.textContent = details;
+
+  proxyInfo.appendChild(proxyName);
+  proxyInfo.appendChild(proxyDetails);
 
   // Add click listener to switch proxy (only for enabled proxies)
-  const proxyInfo = div.querySelector('.proxy-info');
   proxyInfo.addEventListener('click', () => {
     if (proxy.id === 'direct' || proxy.enabled !== false) {
       switchProxy(proxy.id);
     }
   });
 
-  // Add toggle listener
-  const toggleBtn = div.querySelector('.btn-toggle');
-  if (toggleBtn) {
+  // Create proxy actions section
+  const proxyActions = document.createElement('div');
+  proxyActions.className = 'proxy-actions';
+
+  // Build action buttons for non-direct proxies
+  if (proxy.id !== 'direct') {
+    const toggleIcon = proxy.enabled === false ? '○' : '●';
+    const toggleTitle = proxy.enabled === false ? 'Enable proxy' : 'Disable proxy';
+
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'btn-toggle';
+    toggleBtn.dataset.id = proxy.id;
+    toggleBtn.title = toggleTitle;
+    toggleBtn.textContent = toggleIcon;
     toggleBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       toggleProxy(proxy.id);
     });
-  }
 
-  // Add edit listener
-  const editBtn = div.querySelector('.btn-edit');
-  if (editBtn) {
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn-edit';
+    editBtn.dataset.id = proxy.id;
+    editBtn.title = 'Edit proxy';
+    editBtn.textContent = '✎';
     editBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       editProxy(proxy.id);
     });
-  }
 
-  // Add delete listener
-  const deleteBtn = div.querySelector('.btn-delete');
-  if (deleteBtn) {
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'btn-delete';
+    deleteBtn.dataset.id = proxy.id;
+    deleteBtn.title = 'Delete proxy';
+    deleteBtn.textContent = '×';
     deleteBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       deleteProxy(proxy.id);
     });
+
+    proxyActions.appendChild(toggleBtn);
+    proxyActions.appendChild(editBtn);
+    proxyActions.appendChild(deleteBtn);
   }
+
+  const statusIndicator = document.createElement('span');
+  statusIndicator.className = 'status-indicator';
+  proxyActions.appendChild(statusIndicator);
+
+  div.appendChild(proxyInfo);
+  div.appendChild(proxyActions);
 
   return div;
 }

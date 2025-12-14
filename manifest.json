@@ -23,5 +23,11 @@
 
   "background": {
     "scripts": ["background.js"]
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "91.1.0"
+    }
   }
 }

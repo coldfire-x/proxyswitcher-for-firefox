@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proxy Switcher</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Proxy Switcher</h1>
+      <div class="status">
+        <span id="statusText">Direct Connection</span>
+      </div>
+    </div>
+
+    <div class="proxy-list" id="proxyList">
+      <div class="proxy-item direct active" data-proxy="direct">
+        <div class="proxy-info">
+          <div class="proxy-name">Direct Connection</div>
+          <div class="proxy-details">No proxy</div>
+        </div>
+        <div class="proxy-actions">
+          <span class="status-indicator"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="addProxyBtn" class="btn btn-primary">+ Add Proxy</button>
+    </div>
+
+    <div id="addProxyForm" class="form-container" style="display: none;">
+      <h2 id="formTitle">Add New Proxy</h2>
+      <form id="proxyForm">
+        <input type="hidden" id="editingProxyId" value="">
+        <div class="form-group">
+          <label for="proxyName">Name:</label>
+          <input type="text" id="proxyName" required placeholder="My Proxy">
+        </div>
+
+        <div class="form-group">
+          <label for="proxyType">Type:</label>
+          <select id="proxyType">
+            <option value="http">HTTP</option>
+            <option value="https">HTTPS</option>
+            <option value="socks">SOCKS4</option>
+            <option value="socks5">SOCKS5</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="proxyHost">Host:</label>
+          <input type="text" id="proxyHost" required placeholder="proxy.example.com">
+        </div>
+
+        <div class="form-group">
+          <label for="proxyPort">Port:</label>
+          <input type="number" id="proxyPort" required placeholder="8080" min="1" max="65535">
+        </div>
+
+        <div class="form-group">
+          <label for="proxyUsername">Username (optional):</label>
+          <input type="text" id="proxyUsername" placeholder="username">
+        </div>
+
+        <div class="form-group">
+          <label for="proxyPassword">Password (optional):</label>
+          <input type="password" id="proxyPassword" placeholder="password">
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" id="cancelBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

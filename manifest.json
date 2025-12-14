@@ -27,13 +27,12 @@
 
   "browser_specific_settings": {
     "gecko": {
-      "strict_min_version": "91.1.0"
+      "strict_min_version": "91.1.0",
+      "data_collection_permissions": {
+        "dns_lookup": false,
+        "browsing_history": false,
+        "privacy": false
+      }
     }
-  },
-
-  "data_collection_permissions": {
-    "dns_lookup": false,
-    "browsing_history": false,
-    "privacy": false
   }
 }
